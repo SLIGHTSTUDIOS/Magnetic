@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    //Player contrl
+    //Components
+    Transform playerTransform;
+    public Rigidbody2D playerRb;
+
+    //Player horizontal mvment
     public float playerSpeed;
     public float normalSpeed;
     public float decreasedSpeed;
     public float playerHorizontal;
     public float maxSpeed;
-    Transform playerTransform;
-    Vector2 movementDir;
-    Rigidbody2D playerRb;
+  
+    //jumping
     bool onGround;
     public float jumpForce = 200;
     
@@ -65,13 +68,12 @@ public class Movement : MonoBehaviour
         
     }
 
-
+    //checking for ground collision
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "ground")
         {
             onGround = true;
-            Debug.Log("pass");
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -82,15 +84,16 @@ public class Movement : MonoBehaviour
         }
     }
 
+    //flipping player
     void flipPlayer()
     {
-        if(playerHorizontal < 0) 
+        if(playerHorizontal < 0)
         {
-            transform.localScale = new Vector2(Mathf.Sign(playerHorizontal), 1f);
+            transform.localScale = new Vector2(Mathf.Sign(playerRb.velocity.x), 1f);
         }
-        if (playerHorizontal > 0)
+        if(playerHorizontal > 0)
         {
-            transform.localScale = new Vector2(Mathf.Sign(playerHorizontal), 1f);
+            transform.localScale = new Vector2(Mathf.Sign(playerRb.velocity.x), 1f);
         }
     }
     
